@@ -1,0 +1,23 @@
+Choose a registry (default or local or your choice)
+Some first command might be needed.
+docker run -d  --name registloc -p 54321:5000 registry:2
+
+Tag properly one local image
+docker images
+docker ps
+docker tag hello-world:latest localhost:54321/hello-world:latest
+docker images
+
+Push this local image to this registry
+docker push localhost:54321/hello-world:latest
+
+curl http://localhost:54321/v2/_catalog
+
+Remove your local image
+docker rmi localhost:54321/hello-world:latest
+docker images
+
+Pull it back from the registry
+docker pull localhost:54321/hello-world:latest
+docker images
+

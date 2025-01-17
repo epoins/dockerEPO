@@ -1,0 +1,28 @@
+# 
+services:
+  db:
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    image: mysql:latest
+    networks:
+      - mynetwork
+    volumes:
+      - db_data:/var/lib/mysql
+
+  web:
+    image: nginx:latest
+    networks:
+      - mynetwork
+    ports:
+      - "80:80"
+    volumes:
+      - ./html:/usr/share/nginx/html
+
+volumes:
+  db_data:
+
+networks:
+  mynetwork:

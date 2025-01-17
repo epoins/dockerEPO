@@ -1,0 +1,27 @@
+services:
+  api:
+    image: "student-list-api:v1"
+    ports: 
+      - "4000:5000"
+    volumes: 
+      - "./simple_api/student_age.json:/data/student_age.json"
+    networks:
+      - student-list-net
+
+  web:
+    image: php:apache
+    depends_on:
+      - api
+    ports:
+      - "80:80"
+    volumes: 
+      - "./website:/var/www/html"
+    environment:
+      - USERNAME=toto
+      - PASSWORD=python
+    networks:
+      - student-list-net
+
+networks:
+  student-list-net:
+

@@ -1,0 +1,11 @@
+Get to trouble dir, start the container
+cd trouble
+docker build -t trouble-container .
+docker run --name trouble-container -d trouble-container
+
+See the logs
+docker logs trouble-container
+
+Get in with exec option
+docker exec -it trouble-container /bin/bash
+cat /var/log/error.log

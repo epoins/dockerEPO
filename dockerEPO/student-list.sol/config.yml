@@ -1,0 +1,18 @@
+version: 0.1
+log:
+  fields:
+    service: registry
+storage:
+  cache:
+    blobdescriptor: inmemory
+  filesystem:
+    rootdirectory: /var/lib/registry
+http:
+  addr: :5000
+  headers:
+    X-Content-Type-Options: [nosniff]
+    Access-Control-Allow-Origin: ['*']
+    Access-Control-Allow-Methods: ['HEAD', 'GET', 'OPTIONS', 'DELETE', 'POST', 'PUT']
+    Access-Control-Allow-Headers: ['Authorization', 'Accept', 'Cache-Control', 'Content-Type', 'DNT', 'If-Modified-Since', 'Keep-Alive', 'Origin', 'User-Agent', 'X-Requested-With']
+    Access-Control-Expose-Headers: ['Docker-Content-Digest', 'Docker-Distribution-Api-Version', 'WWW-Authenticate']
+

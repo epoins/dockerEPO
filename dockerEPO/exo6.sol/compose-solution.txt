@@ -1,0 +1,10 @@
+cd exo6
+See compose.yaml 
+
+Start the services and check the web
+docker compose up —build  -d
+docker compose ls
+docker compose images
+docker ps
+
+lynx http://localhost:8080

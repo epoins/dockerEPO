@@ -1,0 +1,75 @@
+cd simple_api
+See Dockerfile
+
+docker build -t student-list-api:v1  .
+docker images
+docker run –rm --name student-list-api -d student-list-api:v1
+docker ps
+
+docker logs student-list-api		(note IP) 
+curl -u toto:python -X GET http://172.17.0.2:5000/pozos/api/v1.0/get_student_ages
+
+
+----------------------------------------
+
+
+try with network :
+
+docker network create student-list-net
+docker network ls
+
+Restart the first container:
+docker rm -f student-list-api
+docker run --rm --network student-list-net  --name student-list-api -d student-list-api:v1
+
+curl -u toto:python -X GET http://172.17.0.2:5000/pozos/api/v1.0/get_student_ages
+Stop it
+docker rm -f student-list-api
+
+
+----------------------------------------
+
+Compose:
+
+cd .. 
+See compose.yaml
+docker compose config > compose-config.yaml
+See compose-config.yaml
+
+Edit website/index.php (correct line 29 with internal port) 
+		student-list-api-1:5000
+
+----------------------------------------
+
+Start both services:
+
+docker compose up -d
+docker compose ls
+docker compose images
+docker compose ps
+docker logs student-list-web-1
+
+Check on the web:
+ip a	(get the correct ip)
+Firefox : http://<ip> 
+	clic button
+
+
+----------------------------------------
+
+Registry:
+
+Start a local registry:
+docker run -d --name registry --network student-list_student-list-net -p 5000:5000 registry:2
+
+Tag and push:
+docker image tag student-list-api:v1 localhost:5000/student-list-api:v1
+docker push localhost:5000/student-list-api:v1
+
+Web interface:
+docker run -d --name registry-ui --network student-list_student-list-net -p 4002:80 -e REGISTRY_TITLE="Student REGISTRY" -e REGISTRY_URL=http://registry:5000 -e DELETE_IMAGES=true  joxit/docker-registry-ui:latest
+
+ip a 	(get the correct ip)
+Firefox : http://<ip>:4002
+
+! Latest version of  joxit/docker-registry-ui might need a patch on registry:2

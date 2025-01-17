@@ -1,0 +1,31 @@
+services:
+  # web server
+  my_nginx:
+    depends_on:
+      - my_postgres
+    image: nginx:latest
+    networks:
+      - my_network
+    ports:
+      - 8080:80
+
+  # DB
+  my_postgres:
+    environment:
+      POSTGRES_DB: openclas
+      POSTGRES_PASSWORD: pass
+    image: postgres:latest
+    networks:
+      - my_network
+    ports:
+      - 5432:5432
+    volumes:
+      - my_postgres_data:/var/lib/postgresql/data
+      
+networks:
+  my_network:
+    driver: bridge
+    
+volumes:
+  my_postgres_data:
+
