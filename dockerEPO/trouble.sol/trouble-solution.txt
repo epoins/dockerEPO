@@ -1,11 +1,18 @@
 Get to trouble dir, start the container
 cd trouble
-docker build -t trouble-container .
-docker run --name trouble-container -d trouble-container
+docker build -t trouble-i .
+docker run --name trouble-c -d trouble-i
+
+See the stats 
+docker stats
 
 See the logs
-docker logs trouble-container
+docker logs trouble-c
+(read error msg)
 
 Get in with exec option
-docker exec -it trouble-container /bin/bash
-cat /var/log/error.log
+docker exec -it trouble-c /bin/bash
+
+Find what generated this error msg
+cat /start.sh
+(see echo line)
